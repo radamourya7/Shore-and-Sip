@@ -16,6 +16,17 @@ import galleryRoutes from './routes/gallery.js';
 
 dotenv.config();
 
+// Global Error Handlers
+process.on('uncaughtException', (err) => {
+  console.error('❌ UNCAUGHT EXCEPTION:', err.stack || err);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('❌ UNHANDLED REJECTION:', reason);
+  process.exit(1);
+});
+
 if (!process.env.MONGO_URI) {
   console.error('❌ FATAL ERROR: MONGO_URI is not defined in environment variables.');
   console.error('Please set it in the Render dashboard under Environment tab.');
@@ -24,6 +35,13 @@ if (!process.env.MONGO_URI) {
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Ensure uploads directory exists
+import fs from 'fs';
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir);
+}
 
 const app = express();
 

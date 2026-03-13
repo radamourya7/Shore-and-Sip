@@ -28,9 +28,10 @@ This guide explains how to deploy the Shore & Sip MERN application. We will depl
    - **Base Directory:** `client`
    - **Build Command:** `npm run build`
    - **Publish Directory:** `client/dist`
-3. **Environment Variables:** In Netlify "Site settings" > "Environment variables", add:
+4. **Environment Variables:** In Netlify "Site settings" > "Environment variables", add:
    - `VITE_API_URL`: Your Render backend URL (e.g., `https://shore-and-sip-backend.onrender.com/api`).
-4. **Deploy:** Netlify will build and deploy your site. Note your site's URL and update the `FRONTEND_URL` in your Render backend settings!
+5. **SPA Routing:** I have already added a `_redirects` file in `client/public` to handle React Router paths. Netlify will use this automatically to prevent 404 errors on page refresh.
+6. **Deploy:** Netlify will build and deploy your site. Note your site's URL and update the `FRONTEND_URL` in your Render backend settings!
 
 ---
 
@@ -38,4 +39,8 @@ This guide explains how to deploy the Shore & Sip MERN application. We will depl
 
 - **CORS:** Ensure the `FRONTEND_URL` in Render matches your Netlify URL exactly.
 - **Database:** Use a hosted MongoDB service like [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
+- **IP Whitelist (CRITICAL):** In MongoDB Atlas, you **must** allow access from anywhere (`0.0.0.0/0`) because Render's IP addresses change frequently.
+  - Go to **Network Access** in MongoDB Atlas.
+  - Click **Add IP Address**.
+  - Choose **Allow Access from Anywhere**.
 - **Environment Refresh:** If you change environment variables, you may need to "Redeploy" or "Restart" the services on both platforms.

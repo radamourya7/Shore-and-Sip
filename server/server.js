@@ -16,6 +16,12 @@ import galleryRoutes from './routes/gallery.js';
 
 dotenv.config();
 
+if (!process.env.MONGO_URI) {
+  console.error('❌ FATAL ERROR: MONGO_URI is not defined in environment variables.');
+  console.error('Please set it in the Render dashboard under Environment tab.');
+  process.exit(1);
+}
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
